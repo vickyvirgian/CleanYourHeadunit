@@ -1,0 +1,21 @@
+plugins { id 'com.android.application'; id 'org.jetbrains.kotlin.android' }
+android {
+    namespace 'app.cleanyour.headunit'
+    compileSdk 34
+    defaultConfig { applicationId 'app.cleanyour.headunit'; minSdk 28; targetSdk 34; versionCode 1; versionName '0.1.0' }
+    compileOptions { sourceCompatibility JavaVersion.VERSION_17; targetCompatibility JavaVersion.VERSION_17 }
+    kotlinOptions { jvmTarget = '17' }
+}
+dependencies {
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.9.0'
+    testImplementation 'junit:junit:4.13.2'
+}
+def bundledHelper = layout.buildDirectory.dir('generated/helperAssets')
+android.sourceSets.main.assets.srcDir(bundledHelper)
+tasks.register('bundleHelper', Copy) {
+    dependsOn ':helper:assembleDebug'
+    from project(':helper').layout.buildDirectory.file('outputs/apk/debug/helper-debug.apk')
+    into bundledHelper
+    rename { 'headunit-helper.apk' }
+}
+tasks.named('preBuild').configure { dependsOn 'bundleHelper' }
