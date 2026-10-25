@@ -1,0 +1,17 @@
+plugins { id 'com.android.application'; id 'org.jetbrains.kotlin.android' }
+android {
+    namespace 'app.cleanyour.headunit.local'
+    compileSdk 34
+    defaultConfig { applicationId 'app.cleanyour.headunit.local'; minSdk 26; targetSdk 34; versionCode 1; versionName '0.2.0' }
+    sourceSets.main.java.srcDir "$rootDir/shared/src/main/kotlin"
+    sourceSets.main.assets.srcDir "$rootDir/design/assets"
+    buildFeatures { aidl true }
+    compileOptions { sourceCompatibility JavaVersion.VERSION_17; targetCompatibility JavaVersion.VERSION_17 }
+    kotlinOptions { jvmTarget = '17' }
+}
+dependencies {
+    implementation 'dev.rikka.shizuku:api:13.1.5'
+    implementation 'dev.rikka.shizuku:provider:13.1.5'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.9.0'
+    testImplementation 'junit:junit:4.13.2'
+}

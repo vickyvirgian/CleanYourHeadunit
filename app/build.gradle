@@ -1,5 +1,6 @@
 plugins { id 'com.android.application'; id 'org.jetbrains.kotlin.android' }
 android {
+    sourceSets.main.java.srcDir "$rootDir/shared/src/main/kotlin"
     namespace 'app.cleanyour.headunit'
     compileSdk 34
     defaultConfig { applicationId 'app.cleanyour.headunit'; minSdk 28; targetSdk 34; versionCode 1; versionName '0.1.0' }
