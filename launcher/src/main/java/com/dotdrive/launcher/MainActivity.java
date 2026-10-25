@@ -113,16 +113,15 @@ public class MainActivity extends Activity {
         apps.clear();
         Intent query = new Intent(Intent.ACTION_MAIN);
         query.addCategory(Intent.CATEGORY_LAUNCHER);
-        List<ResolveInfo> found = getPackageManager().queryIntentActivities(
-                query, 0);
+        List<ResolveInfo> found = new ArrayList<>(getPackageManager().queryIntentActivities(query, 0));
+        Intent television = new Intent(Intent.ACTION_MAIN);
+        television.addCategory(Intent.CATEGORY_LEANBACK_LAUNCHER);
+        found.addAll(getPackageManager().queryIntentActivities(television, 0));
         Set<String> seen = new HashSet<>();
 
         for (ResolveInfo info : found) {
-            if (info.activityInfo == null) continue;
+            if (info.activityInfo == null || !info.activityInfo.enabled || !info.activityInfo.applicationInfo.enabled) continue;
             String packageName = info.activityInfo.packageName;
-            if (packageName.equals(getPackageName()) || packageName.equals("com.android.launcher3")) {
-                continue;
-            }
             String key = packageName + "/" + info.activityInfo.name;
             if (!seen.add(key)) continue;
 

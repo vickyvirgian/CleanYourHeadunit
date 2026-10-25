@@ -15,13 +15,15 @@ Build modul `headunit`, lalu pasang `headunit-debug.apk` di head unit Android 8+
 - Daftar kandidat dan proteksi dibagikan dengan aplikasi HP. Launcher dan keyboard aktif diperiksa lagi sebelum mutasi. Status hasil diperiksa, catatan disimpan sebelum menonaktifkan, dan ada **Aktifkan lagi**.
 - Binary ini prototipe debug; akses root/Shizuku, aktivasi ADB dan UI belum diuji pada head unit fisik.
 
-## DOT DRIVE 1.1
+## DOT DRIVE 1.1.1
 
 Build modul `launcher`, lalu pasang `launcher-debug.apk`. Package `com.dotdrive.launcher` dipertahankan agar bisa memperbarui DOT DRIVE sebelumnya dengan tanda tangan yang sama. Pilih sebagai aplikasi Home melalui pengaturan sistem.
 
 Desain mengikuti [Vibe Nothing UI](https://github.com/wangbh030722/vibe-nothing-ui-design): permukaan monokrom, jam Doto dot-matrix, teks Geist, label Geist Mono, bidang titik jarang di belakang kartu, radius kartu 8dp, tombol hitam-putih dan tanpa bayangan. Font lokal beserta lisensi OFL disertakan. Ini adaptasi native, bukan pemuatan HTML/CSS.
 
 Tahan kartu favorit untuk mengganti aplikasinya. Pilihan tersimpan pada posisi yang dipilih; aplikasi yang hilang memakai saran otomatis. Tombol **Perangkat** membuka Clean Your Headunit lokal bila terpasang. Launcher tidak meminta izin root, Shizuku atau jaringan.
+
+Semua activity peluncur Android dan Android TV yang aktif ditampilkan tanpa daftar pengecualian nama paket, termasuk launcher sendiri dan launcher vendor bila aktif. Aplikasi yang dibekukan atau komponen yang dinonaktifkan tidak ditampilkan. Paket layanan tanpa activity peluncur tidak dibuatkan ikon palsu.
 
 ## Mode pengendali dari HP (0.1)
 
