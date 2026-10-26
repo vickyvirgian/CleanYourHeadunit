@@ -15,13 +15,27 @@ Build modul `headunit`, lalu pasang `headunit-debug.apk` di head unit Android 8+
 - Daftar kandidat dan proteksi dibagikan dengan aplikasi HP. Launcher dan keyboard aktif diperiksa lagi sebelum mutasi. Status hasil diperiksa, catatan disimpan sebelum menonaktifkan, dan ada **Aktifkan lagi**.
 - Binary ini prototipe debug; akses root/Shizuku, aktivasi ADB dan UI belum diuji pada head unit fisik.
 
-## DOT DRIVE 1.1.1
+## DOT DRIVE 1.2.0 — dashboard harian
+
+![Dashboard gelap — render pengujian](docs/images/dashboard-dark.png)
+
+Preview native 1024×535 dengan ikon/aplikasi fixture, bukan screenshot head unit fisik. Cuaca dan metadata lagu dibiarkan kosong agar tidak menampilkan data tiruan. [Lihat tema terang](docs/images/dashboard-light.png).
 
 Build modul `launcher`, lalu pasang `launcher-debug.apk`. Package `com.dotdrive.launcher` dipertahankan agar bisa memperbarui DOT DRIVE sebelumnya dengan tanda tangan yang sama. Pilih sebagai aplikasi Home melalui pengaturan sistem.
 
 Desain mengikuti [Vibe Nothing UI](https://github.com/wangbh030722/vibe-nothing-ui-design): permukaan monokrom, jam Doto dot-matrix, teks Geist, label Geist Mono, bidang titik jarang di belakang kartu, radius kartu 8dp, tombol hitam-putih dan tanpa bayangan. Font lokal beserta lisensi OFL disertakan. Ini adaptasi native, bukan pemuatan HTML/CSS.
 
-Tahan kartu favorit untuk mengganti aplikasinya. Pilihan tersimpan pada posisi yang dipilih; aplikasi yang hilang memakai saran otomatis. Tombol **Perangkat** membuka Clean Your Headunit lokal bila terpasang. Launcher tidak meminta izin root, Shizuku atau jaringan.
+Dashboard baru memakai tiga kartu utama (jam/tanggal/jaringan, cuaca dan musik), pintasan Radio/Bluetooth/Berkas, panel sumber harian (Musik USB/Navigasi/Android Auto), empat favorit dan tray semua aplikasi. Android Auto tidak lagi ditempatkan sebagai favorit otomatis pertama; pilihan favorit pengguna sebelumnya dipertahankan.
+
+Tema **Gelap**, **Terang** dan **Transparan** disimpan. Transparan memakai gambar pilihan melalui pemilih dokumen Android; tahan tombol tema Transparan atau buka Tools → Ganti wallpaper untuk mengganti gambar. Gambar diperkecil maksimal sisi 1280px lalu disimpan privat. Tidak ada efek blur, wallpaper video, WebView atau framework UI tambahan.
+
+Tahan kartu favorit untuk mengganti aplikasinya. Pilihan tersimpan pada posisi yang dipilih; aplikasi yang hilang memakai saran otomatis. **Tools** menyediakan pengaturan Android, Clean Your Headunit, kontrol musik, wallpaper, kota cuaca dan pemutar pilihan.
+
+Cuaca bersifat opsional: pilih kota secara manual, tanpa GPS. Pencarian kota dan koordinat kota pilihan dikirim melalui HTTPS ke [Open-Meteo](https://open-meteo.com/en/docs) / [Geocoding API](https://open-meteo.com/en/docs/geocoding-api). Data terakhir disimpan lokal dengan waktu pembaruan/cache; percobaan otomatis dibatasi 30 menit saat dashboard terlihat, dan fitur lokal tetap tersedia offline. Akses API gratis ini ditujukan untuk penggunaan nonkomersial; distribusi komersial memerlukan peninjauan ketentuan Open-Meteo. Atribusi sumber ditampilkan di kartu dan menu informasi cuaca.
+
+Kontrol musik memakai sesi media Android. Akses notifikasi DOT DRIVE harus diberikan sendiri melalui pengaturan Android untuk membaca metadata/pemutar; service tidak membaca atau menyimpan isi pesan/notifikasi. Launcher tetap dapat dipakai tanpa izin ini. Radio/BT vendor yang tidak menerbitkan sesi media dapat dibuka lewat pintasan, tetapi judul lagu dan tombol transportnya tidak dijanjikan tersedia. Tombol transport hanya aktif bila sesi menyediakan aksi tersebut. Tidak ada lagu, cuaca atau data perjalanan tiruan.
+
+Izin launcher: INTERNET dan ACCESS_NETWORK_STATE untuk cuaca/status jaringan, serta NotificationListenerService yang dilindungi izin sistem dan hanya aktif setelah persetujuan pengguna. Launcher tidak memerlukan root atau Shizuku.
 
 Semua activity peluncur Android dan Android TV yang aktif ditampilkan tanpa daftar pengecualian nama paket, termasuk launcher sendiri dan launcher vendor bila aktif. Aplikasi yang dibekukan atau komponen yang dinonaktifkan tidak ditampilkan. Paket layanan tanpa activity peluncur tidak dibuatkan ikon palsu.
 
@@ -67,4 +81,4 @@ Hasil di `<modul>/build/outputs/apk/debug/`. Modul `headunit` adalah aplikasi la
 - Shizuku API/provider 13.1.5: https://github.com/RikkaApps/Shizuku-API (Apache 2.0).
 - Panduan aktivasi: https://shizuku.rikka.app/guide/setup/.
 
-Pengujian unit mencakup daftar proteksi, batas profil vendor, perintah yang diizinkan, penolakan injeksi perintah, autentikasi ADB dan penempatan favorit. Build/lint/unit test tidak menggantikan pengujian fisik root, Shizuku, jaringan, CAN bus, audio atau Home.
+Pengujian unit mencakup daftar proteksi, batas profil vendor, perintah yang diizinkan, penolakan injeksi perintah, autentikasi ADB, penempatan favorit, parsing cuaca/timezone, kondisi tanpa data, dan alur dashboard/tema/pemilih wallpaper. Render native Robolectric 1024×535 untuk preview memakai ikon dan daftar aplikasi pengujian; bukan screenshot perangkat fisik. Build/lint/unit test tidak menggantikan pengujian fisik root, Shizuku, jaringan, CAN bus, audio atau Home.
